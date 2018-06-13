@@ -1,5 +1,12 @@
 $(function() {
 
+	var resumen = $('#resumen');
+	var sensacion = $('#sensacion');
+	var probabilidad = $('#probabilidad');
+	var humedad = $('#humedad');
+	var imagen = $('.img-responsive')
+	var escondido = $('#escondido')
+
 	var cors = 'https://cors-anywhere.herokuapp.com/'; //soy el cors inmortal
 	var url = 'https://api.darksky.net/forecast/';
 	var key = '9e7aa9d7caff4b048f8eb545e8665927/';
@@ -20,12 +27,13 @@ $(function() {
 		url: cors + url + key + coords[$(this).val()] + '?'+queryParams[0]+'&'+queryParams[1] + '&' + queryParams[2],
 		method: 'GET'
 		}).then(function(data){
-			console.log(data);
-			$('#resumen').text(parseInt(data.currently.temperature)+'° ' + data.currently.summary);
-			$('#sensacion').text(data.currently.apparentTemperature + '°');
-			$('#probabilidad').text(data.currently.precipProbability * 100 + '%');
-			$('#humedad').text(data.currently.humidity * 100 + '%');
-			$('.img-responsive').attr('src',image[data.currently.icon])
+			
+			resumen.text(parseInt(data.currently.temperature)+'° ' + data.currently.summary);
+			sensacion.text(data.currently.apparentTemperature + '°');
+			probabilidad.text(data.currently.precipProbability * 100 + '%');
+			humedad.text(data.currently.humidity * 100 + '%');
+			imagen.attr('src',image[data.currently.icon])
+			escondido.removeAttr("hidden");
 		});
 	});	
 });
